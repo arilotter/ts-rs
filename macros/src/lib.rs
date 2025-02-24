@@ -168,6 +168,12 @@ impl DerivedTS {
                     }
                 }
 
+                impl AsRef<[u8]> for #generics {
+                    fn as_ref(&self) -> &[u8] {
+                        unimplemented!()
+                    }
+                }
+
 
 
                 impl #crate_rename::TS for #generics {
