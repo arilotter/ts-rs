@@ -1066,9 +1066,24 @@ pub(crate) use impl_shadow;
 #[rustfmt::skip]
 pub(crate) use impl_wrapper;
 
+#[cfg(feature = "psyche-impl")]
+use {
+    serde::{Serialize, Deserialize},
+    anchor_lang::{prelude::borsh, AnchorDeserialize, AnchorSerialize, InitSpace},
+    bytemuck::Zeroable
+};
+
 #[doc(hidden)]
 #[derive(Copy, Clone, Debug, Hash, Eq, PartialEq, Ord, PartialOrd)]
+#[cfg_attr(feature = "psyche-impl", derive(Default, Serialize, Deserialize, AnchorDeserialize, AnchorSerialize, InitSpace, Zeroable))]
 pub struct Dummy;
+
+#[cfg(feature = "psyche-impl")]
+impl AsRef<[u8]> for Dummy {
+    fn as_ref(&self) -> &[u8] {
+        unimplemented!()
+    }
+}
 
 impl std::fmt::Display for Dummy {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
