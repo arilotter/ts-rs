@@ -155,13 +155,19 @@ impl DerivedTS {
                 };
                 #[derive(Copy, Clone, Debug, Hash, Eq, PartialEq, Ord, PartialOrd)]
                 #[derive(Default, Serialize, Deserialize, AnchorDeserialize, AnchorSerialize, InitSpace, Zeroable)]
-
                 struct #generics;
                 impl std::fmt::Display for #generics {
                     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(f, "{:?}", self)
                     }
                 }
+
+                impl psyche_core::NodeIdentity for #generics {
+                    fn get_p2p_public_key(&self) -> &[u8; 32] {
+                        unimplemented!()
+                    }
+                }
+
 
 
                 impl #crate_rename::TS for #generics {
