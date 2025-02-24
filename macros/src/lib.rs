@@ -147,13 +147,23 @@ impl DerivedTS {
         let name = quote![<Self as #crate_rename::TS>::name()];
         quote! {
             #(
+
+                use {
+                    serde::{Serialize, Deserialize},
+                    anchor_lang::{prelude::borsh, AnchorDeserialize, AnchorSerialize, InitSpace},
+                    bytemuck::Zeroable
+                };
                 #[derive(Copy, Clone, Debug, Hash, Eq, PartialEq, Ord, PartialOrd)]
+                #[derive(Default, Serialize, Deserialize, AnchorDeserialize, AnchorSerialize, InitSpace, Zeroable)]
+
                 struct #generics;
                 impl std::fmt::Display for #generics {
                     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(f, "{:?}", self)
                     }
                 }
+
+
                 impl #crate_rename::TS for #generics {
                     type WithoutGenerics = #generics;
                     fn name() -> String { stringify!(#generics).to_owned() }
