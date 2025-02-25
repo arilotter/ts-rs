@@ -208,10 +208,11 @@ impl_parse! {
                 parse_assign_str(input)?;
             }
         },
-        "with" => {
+        "with" | "serialize_with" | "deserialize_with" => {
             parse_assign_str(input)?;
             out.0.using_serde_with = true;
         },
+
     }
 }
 
